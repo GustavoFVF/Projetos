@@ -1,0 +1,143 @@
+unit model.conexao;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
+  Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef;
+
+type
+  TDMConexao = class(TDataModule)
+    FDConnection: TFDConnection;
+    FDQuery: TFDQuery;
+    FDQuery1: TFDQuery;
+    FDMetaInfoQuery1: TFDMetaInfoQuery;
+    FDataSet: TDataSet;
+
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    function DataSet: TDataSet;
+    procedure SQL(Value: String);
+    procedure Params(aParam: String; aValue: Variant); overload;
+    function Params(aParam: String): Variant; overload;
+    procedure ExecSQL;
+    procedure Open;
+    procedure StartTransaction;
+    procedure Commit;
+    procedure Rollback;
+    procedure GetTableNamesFromDatabase(aList:TStrings);
+    function GetTableNames(const AConnection: TFDConnection): TStringList;
+    function ObterValorDoCampo(const NomeCampo: string): Variant;
+
+
+  end;
+  var
+  DMConexao: TDMConexao;
+
+implementation
+
+uses
+  Vcl.Dialogs;
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+{ Tdmd }
+
+procedure TDMConexao.Commit;
+begin
+  FDConnection.Commit;
+end;
+
+
+procedure TDMConexao.DataModuleCreate(Sender: TObject);
+begin
+   FDConnection.Connected;
+end;
+
+function TDMConexao.DataSet: TDataSet;
+begin
+   Result := FDQuery;
+end;
+
+procedure TDMConexao.ExecSQL;
+begin
+   FDQuery.ExecSQL;
+end;
+
+procedure TDMConexao.GetTableNamesFromDatabase(aList:TStrings);
+var
+ TableList: TStringList;
+  I: Integer;
+begin
+  TableList := TStringList.Create;
+  try
+   FDConnection.GetTableNames('','','',aList);
+   for I := 0 to TableList.Count -1 do
+     begin
+       ShowMessage(TableList[I]);
+     end;
+  finally
+   TableList.DisposeOf;
+  end;
+
+end;
+
+function TDMConexao.GetTableNames(
+  const AConnection: TFDConnection): TStringList;
+begin
+  Result := TStringList.Create;
+  try
+    AConnection.GetTableNames('', '', '', Result);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+
+function TDMConexao.ObterValorDoCampo(const NomeCampo: string): Variant;
+begin
+ Result := FDataSet.FieldByName(NomeCampo).Value;
+end;
+
+procedure TDMConexao.Open;
+begin
+  FDQuery.Open;
+end;
+
+function TDMConexao.Params(aParam: String): Variant;
+begin
+   Result := FDQuery.ParamByName(aParam).Value;
+end;
+
+procedure TDMConexao.Params(aParam: String; aValue: Variant);
+begin
+  FDQuery.ParamByName(aParam).Value := aValue;
+end;
+
+procedure TDMConexao.Rollback;
+begin
+  FDConnection.Rollback;
+end;
+
+procedure TDMConexao.SQL(Value: String);
+begin
+  FDQuery.SQL.Clear;
+  FDQuery.SQL.Add(Value);
+  FDQuery.Open;
+end;
+
+procedure TDMConexao.StartTransaction;
+begin
+  FDConnection.StartTransaction;
+end;
+
+end.

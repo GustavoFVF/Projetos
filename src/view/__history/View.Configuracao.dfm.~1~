@@ -1,0 +1,8 @@
+inherited FrmConfiguracao: TFrmConfiguracao
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnl_top: TPanel
+    ExplicitLeft = 0
+    ExplicitWidth = 755
+  end
+end

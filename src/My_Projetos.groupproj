@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6D4E5088-5B78-4193-8245-A6761385A1F9}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="IBConectFB.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Finances\Finances.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="IBConectFB">
+        <MSBuild Projects="IBConectFB.dproj"/>
+    </Target>
+    <Target Name="IBConectFB:Clean">
+        <MSBuild Projects="IBConectFB.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="IBConectFB:Make">
+        <MSBuild Projects="IBConectFB.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Finances">
+        <MSBuild Projects="..\..\Finances\Finances.dproj"/>
+    </Target>
+    <Target Name="Finances:Clean">
+        <MSBuild Projects="..\..\Finances\Finances.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Finances:Make">
+        <MSBuild Projects="..\..\Finances\Finances.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="IBConectFB;Finances"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="IBConectFB:Clean;Finances:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="IBConectFB:Make;Finances:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,18 @@
+program IBConectFB;
+
+uses
+  Vcl.Forms,
+  View.Main in 'View\View.Main.pas' {FrmPrincipal},
+  View.Base in 'view\View.Base.pas' {FrmBase},
+  model.conexao in 'model\model.conexao.pas' {dmd: TDataModule},
+  model.dao.execute in 'model\dao\model.dao.execute.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  ReportMemoryLeaksOnShutdown:=True;
+  Application.CreateForm(TFrmPrincipal, FrmPrincipal);
+  Application.Run;
+end.

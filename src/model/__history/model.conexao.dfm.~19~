@@ -1,0 +1,22 @@
+object DMConexao: TDMConexao
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Height = 133
+  Width = 201
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'Database=C:\src\db\FDCMARKET\FDCMARKET.GDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'DriverID=FB')
+    Connected = True
+    LoginPrompt = False
+    Left = 40
+    Top = 16
+  end
+  object FDQuery: TFDQuery
+    Connection = FDConnection
+    Left = 112
+    Top = 32
+  end
+end

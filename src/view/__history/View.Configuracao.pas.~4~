@@ -1,0 +1,62 @@
+unit View.Configuracao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Base, System.ImageList,
+  Vcl.ImgList, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage;
+
+type
+  TFrmConfiguracao = class(TFrmBase)
+    Panel4: TPanel;
+    Panel1: TPanel;
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    pnl_butons: TPanel;
+    Panel5: TPanel;
+    btn_gravar: TSpeedButton;
+    Panel6: TPanel;
+    btn_Cancelar: TSpeedButton;
+    Panel2: TPanel;
+    Label3: TLabel;
+    Panel7: TPanel;
+    Edt_Servidor: TLabeledEdit;
+    Edt_Porta: TLabeledEdit;
+    Edt_caminhoBanco: TLabeledEdit;
+    edt_login: TLabeledEdit;
+    edt_Senha: TLabeledEdit;
+    Panel3: TPanel;
+    Label4: TLabel;
+    Panel8: TPanel;
+    edt_caminho_Atual: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit4: TLabeledEdit;
+    LabeledEdit5: TLabeledEdit;
+    LabeledEdit6: TLabeledEdit;
+    procedure btn_gravarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmConfiguracao: TFrmConfiguracao;
+
+implementation
+uses
+ Utils;
+
+{$R *.dfm}
+
+procedure TFrmConfiguracao.btn_gravarClick(Sender: TObject);
+begin
+  inherited;
+  ValidarCamposObrigatorio(FrmConfiguracao);
+
+end;
+
+end.
